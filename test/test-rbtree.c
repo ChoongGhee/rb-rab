@@ -135,7 +135,9 @@ void test_to_array(rbtree *t, const key_t *arr, const size_t n) {
 
   key_t *res = calloc(n, sizeof(key_t));
   rbtree_to_array(t, res, n);
+  // printf("%d ",res[0]);
   for (int i = 0; i < n; i++) {
+    // printf("%d ", res[i]);
     assert(arr[i] == res[i]);
   }
   free(res);
@@ -311,13 +313,21 @@ void test_to_array_suite() {
 }
 
 void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
+  // printf("hello\n");
   for (int i = 0; i < n; i++) {
+    
     node_t *p = rbtree_insert(t, arr[i]);
+    // printf("%d ", p->key);
+    // printf("1hello1\n");
     assert(p != NULL);
   }
 
   for (int i = 0; i < n; i++) {
+    // printf("2hello2\n");
+
     node_t *p = rbtree_find(t, arr[i]);
+    // printf("%d ", p->key);
+    // printf("2hello2\n");
     // printf("arr[%d] = %d\n", i, arr[i]);
     assert(p != NULL);
     assert(p->key == arr[i]);
@@ -326,6 +336,7 @@ void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
 
   for (int i = 0; i < n; i++) {
     node_t *p = rbtree_find(t, arr[i]);
+    // printf("%d ", p);
     assert(p == NULL);
   }
 
@@ -339,6 +350,7 @@ void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
     rbtree_erase(t, p);
     q = rbtree_find(t, arr[i]);
     assert(q == NULL);
+    // printf("%d ", 1);
   }
 }
 
@@ -369,15 +381,26 @@ void test_find_erase_rand(const size_t n, const unsigned int seed) {
 
 int main(void) {
   test_init();
+  printf("test_init Finished!\n");
   test_insert_single(1024);
+  printf("test_insert_single Finished!\n");
   test_find_single(512, 1024);
+  printf("test_find_single Finished!\n");
   test_erase_root(128);
+  printf("test_erase_root Finished!\n");
   test_find_erase_fixed();
+  printf("test_find_erase_fixed Finished!\n");
   test_minmax_suite();
+  printf("test_minmax_suite Finished!\n");
   test_to_array_suite();
+  printf("test_to_array_suite Finished!\n");
   test_distinct_values();
+  printf("test_distinct_values Finished!\n");
   test_duplicate_values();
+  printf("test_duplicate_values Finished!\n");
   test_multi_instance();
+  printf("test_multi_instance Finished!\n");
   test_find_erase_rand(10000, 17);
+  printf("test_find_erase_rand Finished!\n");
   printf("Passed all tests!\n");
 }
